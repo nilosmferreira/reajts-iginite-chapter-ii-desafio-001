@@ -98,7 +98,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   }: UpdateProductAmount) => {
     try {
       const { data: stock } = await api.get<Stock>(`stock/${productId}`);
-      if (amount < stock.amount) {
+      if (amount < 1) {
+        return;
+      } else if (amount < stock.amount) {
         const changedProducts = cart.map((p) => {
           if (productId === p.id) {
             p.amount = amount;
